@@ -2,6 +2,10 @@
 experiment_name: heart_disease_experiment
 data_path: "data/heart_combined.csv"
 random_seed: 12345
+
+handle_missing: "mean" 
+model_type: "logistic_regression"
+
 model:
   model_type: logistic_regression
   lr_C: 1.0
