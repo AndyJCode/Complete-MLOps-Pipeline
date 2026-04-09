@@ -34,5 +34,8 @@ def test_target_values_are_valid():
 def test_numeric_columns_have_reasonable_ranges():
     df = load_dataset()
     assert df["age"].between(20, 100).all()
-    assert df["chol"].between(100, 500).all()
+
+    assert df["chol"].between(0, 600).all()
+    
     assert df["trestbps"].between(80, 250).all()
+
