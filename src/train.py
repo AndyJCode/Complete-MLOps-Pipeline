@@ -120,8 +120,13 @@ def run_experiment_from_dict(config: Dict) -> str:
     """Run a single experiment from a configuration dictionary."""
     mlflow.set_experiment(config.get('experiment_name', 'heart-disease-experiments'))
     with mlflow.start_run():
-        mlflow.log_param('data_path', config.get('data_path', 'unknown'))
-        mlflow.log_param('data_version', compute_data_version(config['data_path']))
+        # Define the path once with a fallback to your actual filename
+        data_path = config.get('data_path', 'data/heart_combined.csv')
+        
+        # Use the variable instead of accessing the dict directly
+        mlflow.log_param('data_path', data_path)
+        mlflow.log_param('data_version', compute_data_version(data_path))
+        
         log_config_params(config)
 
         X, y, n_rows, numeric_cols, categorical_cols = load_and_prepare_data(config)
