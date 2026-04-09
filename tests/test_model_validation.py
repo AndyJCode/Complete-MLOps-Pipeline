@@ -1,6 +1,11 @@
+import os
+import sys
 import pandas as pd
-from src.preprocessing import preprocess_data
-from src.train import build_model
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from preprocessing import preprocess_data
+from train import build_model
 
 
 def test_model_predict_returns_binary_labels():
