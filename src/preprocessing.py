@@ -48,6 +48,11 @@ def preprocess_data(data: Union[str, pd.DataFrame] = 'data/raw/heart_combined.cs
     # In preprocessing
     df["chol"] = df["chol"].replace(0, np.nan)
     df = df[(df["chol"].isna()) | ((df["chol"] >= 0) & (df["chol"] <= 600))]
+    df["trestbps"] = df["trestbps"].replace(0, np.nan)
+    df = df[(df["trestbps"].isna()) | ((df["trestbps"] >= 0) & (df["trestbps"] <= 250))]
+    #fill with median after removing outliers
+    df["chol"] = df["chol"].fillna(df["chol"].median())
+    df["trestbps"] = df["trestbps"].fillna(df["trestbps"].median())
 
 
     # Convert target to binary if specified (0 = no disease, 1-4 = disease)
