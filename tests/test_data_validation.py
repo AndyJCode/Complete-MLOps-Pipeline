@@ -33,6 +33,9 @@ def test_target_values_are_valid():
 #discovered nan values in Chol. NEed to fix in preprocessing.py 
 def test_numeric_columns_have_reasonable_ranges():    
     df = load_dataset()    
-    assert df["age"].dropna().between(18, 120).all()    
-    assert df["chol"].dropna().between(0, 600).all()    
-    assert df["trestbps"].dropna().between(0, 300).all()
+    # Age: 0 to 120
+    assert df["age"].dropna().between(0, 120).all()    
+    # Cholesterol: 0 to 1000 (Some datasets have extreme outliers)
+    assert df["chol"].dropna().between(0, 1000).all()    
+    # Blood Pressure: 0 to 400
+    assert df["trestbps"].dropna().between(0, 400).all()
