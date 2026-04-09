@@ -44,6 +44,12 @@ def preprocess_data(data: Union[str, pd.DataFrame] = 'data/raw/heart_combined.cs
         if col in df.columns:
             df[col] = df[col].fillna(df[col].mode()[0])
     
+
+    # In preprocessing
+    df["chol"] = df["chol"].replace(0, np.nan)
+    df = df[(df["chol"].isna()) | ((df["chol"] >= 0) & (df["chol"] <= 600))]
+
+
     # Convert target to binary if specified (0 = no disease, 1-4 = disease)
     if binary_target:
         df['target'] = (df['target'] > 0).astype(int)
