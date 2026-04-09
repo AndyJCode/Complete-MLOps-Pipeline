@@ -1,0 +1,8 @@
+{
+  "total_features": 14,
+  "drifted_features": 0,
+  "drift_share": 0.0,
+  "dataset_drift": false,
+  "status": "ok",
+  "drifted_feature_names": []
+}

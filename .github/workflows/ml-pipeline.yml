@@ -1,0 +1,108 @@
+name: ML Pipeline
+
+# When should this pipeline run?
+on:
+  push:
+    branches: [main, master]  # Support both main and master
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:  # allows manual triggering from GitHub UI
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Job 1: Lint code
+  # ──────────────────────────────────────────────
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install flake8
+
+      - name: Run flake8
+        run: flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  # ──────────────────────────────────────────────
+  # Job 2: Run tests
+  # ──────────────────────────────────────────────
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pytest
+        run: pytest tests/ -v --tb=short
+
+  # ──────────────────────────────────────────────
+  # Job 3: Train and evaluate model
+  # ──────────────────────────────────────────────
+  train:
+    name: Train and Evaluate
+    runs-on: ubuntu-latest
+    needs: test  # only runs if tests pass
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Train model
+        run: python src/train.py
+
+      - name: Upload metrics as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-metrics
+          path: metrics/results.json
+
+      - name: Upload model as artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: models/model.pkl

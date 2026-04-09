@@ -1,0 +1,23 @@
+artifact_path: file:C:/Users/Andy/OneDrive/Desktop/Sprint 17 project/mlruns/1/models/m-bcf8fcba53ce48d8a572c84ffaee5eff/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.12
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.11.1
+model_id: m-bcf8fcba53ce48d8a572c84ffaee5eff
+model_size_bytes: 2201026
+model_uuid: m-bcf8fcba53ce48d8a572c84ffaee5eff
+prompts: null
+run_id: 350c1298ab3e4642bd4780a86c44c802
+utc_time_created: '2026-04-09 18:29:43.776051'

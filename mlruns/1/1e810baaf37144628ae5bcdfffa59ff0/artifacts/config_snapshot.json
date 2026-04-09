@@ -1,0 +1,21 @@
+{
+  "experiment_name": "heart-disease-experiments",
+  "data_path": "data/raw/heart_combined.csv",
+  "binary_target": true,
+  "handle_missing": "median",
+  "scale_features": true,
+  "features_to_drop": [],
+  "test_size": 0.2,
+  "random_state": 12345,
+  "model_type": "logistic_regression",
+  "lr_C": 1.0,
+  "rf_n_estimators": 100,
+  "rf_max_depth": null,
+  "rf_bootstrap": true,
+  "gb_n_estimators": 100,
+  "gb_learning_rate": 0.1,
+  "gb_max_depth": 3,
+  "class_weight": null,
+  "model_output_path": "models/model.pkl",
+  "scaler_output_path": "models/scaler.pkl"
+}
