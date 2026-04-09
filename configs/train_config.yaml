@@ -1,5 +1,6 @@
 # Model training configuration for the Heart Disease MLOps project
 experiment_name: heart_disease_experiment
+data_path: "data/heart_combined.csv"
 random_seed: 12345
 model:
   model_type: logistic_regression
