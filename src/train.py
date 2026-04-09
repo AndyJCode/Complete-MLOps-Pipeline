@@ -120,7 +120,7 @@ def run_experiment_from_dict(config: Dict) -> str:
     """Run a single experiment from a configuration dictionary."""
     mlflow.set_experiment(config.get('experiment_name', 'heart-disease-experiments'))
     with mlflow.start_run():
-        mlflow.log_param('data_path', config['data_path'])
+        mlflow.log_param('data_path', config.get('data_path', 'unknown'))
         mlflow.log_param('data_version', compute_data_version(config['data_path']))
         log_config_params(config)
 
