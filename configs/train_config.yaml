@@ -1,0 +1,50 @@
+# Model training configuration for the Heart Disease MLOps project
+experiment_name: heart_disease_experiment
+random_seed: 12345
+model:
+  model_type: logistic_regression
+  lr_C: 1.0
+  rf_n_estimators: 100
+  rf_max_depth: 5
+  class_weight: balanced
+training:
+  test_size: 0.20
+  normalize: true
+  target_column: target
+  date_column: null
+  categorical_columns:
+    - sex
+    - cp
+    - fbs
+    - restecg
+    - exang
+    - slope
+    - ca
+    - thal
+  numeric_columns:
+    - age
+    - trestbps
+    - chol
+    - thalach
+    - oldpeak
+  feature_columns:
+    - age
+    - sex
+    - cp
+    - trestbps
+    - chol
+    - fbs
+    - restecg
+    - thalach
+    - exang
+    - oldpeak
+    - slope
+    - ca
+    - thal
+metrics:
+  accuracy_threshold: 0.70
+  f1_threshold: 0.60
+  roc_auc_threshold: 0.70
+artifacts:
+  model_dir: models
+  report_dir: reports

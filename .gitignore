@@ -1,0 +1,40 @@
+# Data and models
+models/
+metrics/
+mlruns/
+mlflow.db
+
+# DVC
+.dvc/
+*.dvc
+.dvcignore
+.dvc/cache/
+.dvc/tmp/
+
+# Data files
+data/raw/*.csv
+data/processed/
+dvc_remote/
+
+# Reports
+reports/*.html
+reports/drift_check_result.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+output.txt

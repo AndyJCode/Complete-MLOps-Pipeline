@@ -8,7 +8,7 @@ from src.train import run_experiment_from_dict
 
 TRACKING_URI = "sqlite:///mlflow.db"
 EXPERIMENT_NAME = "heart-disease-experiments"
-BASE_CONFIG_PATH = "config.json"
+BASE_CONFIG_PATH = "configs/train_config.yaml"
 
 # This script runs multiple experiments based on different configurations and compares their results in MLflow.
 def load_base_config(path: str = BASE_CONFIG_PATH) -> Dict:

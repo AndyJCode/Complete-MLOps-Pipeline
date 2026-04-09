@@ -10,6 +10,7 @@ mlflow.set_tracking_uri("sqlite:///mlflow.db")
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
+import yaml
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (accuracy_score, auc, f1_score, precision_score,
@@ -207,13 +208,18 @@ def run_experiment_from_dict(config: Dict) -> str:
         return run_id
 
 
-def run_experiment(config_path: str = 'config.json') -> Optional[str]:
+def load_config(config_path: str = 'configs/train_config.yaml') -> Dict:
+    """Load a training configuration from YAML."""
+    with open(config_path, 'r', encoding='utf-8') as f:
+        return yaml.safe_load(f)
+
+
+def run_experiment(config_path: str = 'configs/train_config.yaml') -> Optional[str]:
     """Run a single experiment with the given configuration file."""
-    with open(config_path, 'r') as f:
-        config = json.load(f)
+    config = load_config(config_path)
     return run_experiment_from_dict(config)
 
 
 if __name__ == '__main__':
-    run_experiment('config.json')
+    run_experiment('configs/train_config.yaml')
 
