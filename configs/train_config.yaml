@@ -1,10 +1,10 @@
 # Model training configuration for the Heart Disease MLOps project
 experiment_name: heart_disease_experiment
 data_path: "data/heart_combined.csv"
-random_seed: 12345
-
-handle_missing: "mean" 
+handle_missing: "mean"
 model_type: "logistic_regression"
+test_size: 0.20
+random_state: 12345
 
 model:
   model_type: logistic_regression
