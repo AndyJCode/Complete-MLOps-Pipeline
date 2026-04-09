@@ -34,8 +34,9 @@ def test_target_values_are_valid():
 def test_numeric_columns_have_reasonable_ranges():
     df = load_dataset()
     assert df["age"].between(20, 100).all()
+    # if chol is not in range, it may indicate data quality issues or outliers that could affect model performance
+    chol = df["chol"].replace(0, float("nan"))
+    assert chol.between(100, 500).all()
 
-    assert df["chol"].between(0, 600).all()
-    
     assert df["trestbps"].between(80, 250).all()
 
