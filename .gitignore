@@ -13,6 +13,7 @@ artifacts/
 .dvc/tmp/
 
 # Data files
+data/*.csv
 data/raw/*.csv
 data/processed/
 dvc_remote/
