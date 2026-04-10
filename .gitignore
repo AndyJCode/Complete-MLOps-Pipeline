@@ -5,10 +5,7 @@ mlruns/
 mlflow.db
 artifacts/
 
-# DVC
-!.dvc
-*.dvc
-.dvcignore
+# DVC — track config and pointer files, ignore local cache
 .dvc/cache/
 .dvc/tmp/
 
