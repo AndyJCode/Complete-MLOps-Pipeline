@@ -4,7 +4,7 @@ from typing import Dict, List
 
 import mlflow
 
-from src.train import run_experiment_from_dict
+from src.evaluation import run_experiment_from_dict
 
 TRACKING_URI = "sqlite:///mlflow.db"
 EXPERIMENT_NAME = "heart-disease-experiments"
