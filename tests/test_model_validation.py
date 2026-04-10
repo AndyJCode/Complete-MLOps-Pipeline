@@ -9,7 +9,7 @@ from train import build_model
 
 
 def test_model_predict_returns_binary_labels():
-    X_train, X_test, y_train, y_test, _ = preprocess_data("data/raw/heart_combined.csv")
+    X_train, X_test, y_train, y_test, _ = preprocess_data("data/heart_combined.csv")
     model = build_model({
         "model_type": "logistic_regression",
         "lr_C": 1.0,
@@ -23,7 +23,7 @@ def test_model_predict_returns_binary_labels():
 
 
 def test_random_forest_model_meets_minimum_accuracy():
-    X_train, X_test, y_train, y_test, _ = preprocess_data("data/raw/heart_combined.csv")
+    X_train, X_test, y_train, y_test, _ = preprocess_data("data/heart_combined.csv")
     model = build_model({
         "model_type": "random_forest",
         "rf_n_estimators": 50,

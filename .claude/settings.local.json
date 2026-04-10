@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip show:*)",
+      "Bash(python -c \"import evidently; print\\(dir\\(evidently\\)\\)\")",
+      "Bash(python -c \"from evidently import Report; print\\('Report OK'\\)\")",
+      "Bash(python -c \"from evidently.presets import DataDriftPreset; print\\('preset OK'\\)\")",
+      "Bash(python -c \"from evidently.metrics import DatasetDriftMetric; print\\('metric OK'\\)\")",
+      "Bash(python -c \"from evidently.options import DataDriftOptions; print\\('options OK'\\)\")",
+      "Bash(python -c \"from evidently.presets import DataDriftPreset; r = DataDriftPreset\\(\\); print\\(type\\(r\\)\\)\")",
+      "Bash(python -c \"import evidently.metrics as m; print\\([x for x in dir\\(m\\) if 'rift' in x or 'Drift' in x]\\)\")",
+      "Bash(python -c \"import evidently.presets as p; print\\([x for x in dir\\(p\\) if 'rift' in x or 'Drift' in x]\\)\")",
+      "Bash(python -c \"from evidently.presets import DataDriftPreset; help\\(DataDriftPreset.__init__\\)\")",
+      "Bash(python -c \"from evidently.metrics import DriftedColumnsCount; help\\(DriftedColumnsCount.__init__\\)\")",
+      "Bash(python -m pytest tests/ -v)"
+    ]
+  }
+}

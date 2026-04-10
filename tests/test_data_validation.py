@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def load_dataset() -> pd.DataFrame:
-    return pd.read_csv("data/raw/heart_combined.csv")
+    return pd.read_csv("data/heart_combined.csv")
 
 
 def test_required_columns_exist():

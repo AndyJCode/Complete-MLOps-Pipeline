@@ -1,8 +1,11 @@
-import os
-from pathlib import Path
 import pandas as pd
+from pathlib import Path
+import sys
+import os
+
 from evidently import Report
 from evidently.presets import DataDriftPreset
+
 
 # Configuration
 DRIFT_SHARE_WARNING = 0.20    # warn if more than 20% of features drift
@@ -29,35 +32,47 @@ def create_reference_and_production(df: pd.DataFrame):
     return reference, month1, month2, month3
 
 
-def introduce_drift(df: pd.DataFrame, drift_type: str) -> pd.DataFrame:
-    """Introduce synthetic drift into the dataset."""
-    df = df.copy()
-    if drift_type == 'covariate':
-        df['age'] = df['age'] + 5
-    elif drift_type == 'label':
-        flip_indices = df.sample(frac=0.2, random_state=12345).index
-        df.loc[flip_indices, 'target'] = 1 - df.loc[flip_indices, 'target']
-    elif drift_type == 'concept':
-        df['target'] = ((df['age'] > 60) & (df['target'] == 0)).astype(int) + \
-                       ((df['age'] <= 60) & (df['target'] == 1)).astype(int)
-    return df
+def introduce_drift(df, drift_type):
+    df_drifted = df.copy()
+    # match the labels from your main block!
+    if drift_type == "covariate":
+        df_drifted['age'] = df_drifted['age'] + 40 
+    elif drift_type == "label":
+        if 'target' in df_drifted.columns:
+            df_drifted['target'] = 1 - df_drifted['target']
+    elif drift_type == "concept":
+        df_drifted['trestbps'] = df_drifted['trestbps'] + 80
+    return df_drifted
 
 
 def generate_drift_report(reference: pd.DataFrame, current: pd.DataFrame, output_path: Path) -> dict:
-    """Generate a drift report and save it as HTML."""
-    report = Report(metrics=[DataDriftPreset()])
+    report = Report(metrics=[
+        DataDriftPreset(drift_share=DRIFT_SHARE_WARNING, threshold=0.1)
+    ])
     snapshot = report.run(reference_data=reference, current_data=current)
-
     output_path.parent.mkdir(parents=True, exist_ok=True)
     snapshot.save_html(str(output_path))
+    report_dict = snapshot.dict()
 
-    summary = snapshot.dict()["metrics"][0]["result"]
-    return summary
+    # metrics[0] is DriftedColumnsCount, auto-added by DataDriftPreset
+    value = report_dict['metrics'][0]['value']
+    share = value.get('share', 0)
+    return {
+        "share_of_drifted_columns": share,
+        "dataset_drift": share >= DRIFT_SHARE_WARNING,
+    }
 
 
 if __name__ == "__main__":
     project_root = Path(__file__).resolve().parents[1]
-    data_path = project_root / "data" / "raw" / "heart_combined.csv"
+    
+    # FIX: Remove "raw" so it points to your actual file location
+    data_path = project_root / "data" / "heart_combined.csv"
+    
+    if not data_path.exists():
+        print(f"Error: Data file not found at {data_path}")
+        raise SystemExit(1)
+
     df = load_data(data_path)
 
     reference, month1, month2, month3 = create_reference_and_production(df)
@@ -72,6 +87,10 @@ if __name__ == "__main__":
 
     exit_code = 0
     for batch_name, batch_data in month_batches.items():
+
+        print(f"Debug - {batch_name} shape: {batch_data.shape}")
+        print(f"Debug - {batch_name} sample:\n{batch_data.iloc[0:2, 0:5]}")
+
         output_path = reports_dir / f"drift_report_{batch_name}.html"
         summary = generate_drift_report(reference, batch_data, output_path)
 

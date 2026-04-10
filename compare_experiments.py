@@ -1,4 +1,4 @@
-import json
+import yaml
 from pathlib import Path
 from typing import Dict, List
 
@@ -13,7 +13,7 @@ BASE_CONFIG_PATH = "configs/train_config.yaml"
 # This script runs multiple experiments based on different configurations and compares their results in MLflow.
 def load_base_config(path: str = BASE_CONFIG_PATH) -> Dict:
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return yaml.safe_load(f)
 
 # This function builds a list of experiment configurations by modifying the base configuration with different model types and hyperparameters.
 def build_experiment_variants(base_config: Dict) -> List[Dict]:
