@@ -3,13 +3,11 @@ import pandas as pd
 import pytest
 from pathlib import Path
 
-DATA_PATH = "data/heart_combined.csv"
-
 
 @pytest.fixture(scope="session", autouse=True)
 def ensure_data_file():
     """Generate synthetic heart disease data if the real file is absent (e.g. CI)."""
-    path = Path(DATA_PATH)
+    path = Path("data/heart_combined.csv")
     if path.exists():
         return
 
@@ -31,14 +29,12 @@ def ensure_data_file():
     ca       = rng.integers(0, 4, n).astype(float)
     thal     = rng.integers(0, 4, n).astype(float)
 
-    # Derive target from a simple rule so the model can learn a real signal
     signal = (age > 55).astype(int) + (cp > 1).astype(int) + (exang == 1).astype(int) + (ca > 1).astype(int)
     target = (signal >= 2).astype(int)
 
-    df = pd.DataFrame({
+    pd.DataFrame({
         "age": age, "sex": sex, "cp": cp, "trestbps": trestbps,
         "chol": chol, "fbs": fbs, "restecg": restecg, "thalach": thalach,
         "exang": exang, "oldpeak": oldpeak, "slope": slope, "ca": ca,
         "thal": thal, "target": target,
-    })
-    df.to_csv(path, index=False)
+    }).to_csv(path, index=False)

@@ -113,4 +113,20 @@ def run_experiment_from_dict(config: Dict) -> str:
         print(f"\nMLflow Run ID: {run_id}")
         print("View this run in the UI: mlflow ui")
 
+        # Validate metrics against thresholds from config
+        thresholds = config.get('metrics', {})
+        failures = []
+        if accuracy < thresholds.get('accuracy_threshold', 0):
+            failures.append(f"Accuracy {accuracy:.4f} below threshold {thresholds['accuracy_threshold']}")
+        if f1 < thresholds.get('f1_threshold', 0):
+            failures.append(f"F1 {f1:.4f} below threshold {thresholds['f1_threshold']}")
+        if y_prob is not None and auc_score < thresholds.get('roc_auc_threshold', 0):
+            failures.append(f"AUC-ROC {auc_score:.4f} below threshold {thresholds['roc_auc_threshold']}")
+
+        if failures:
+            print("\nThreshold violations:")
+            for msg in failures:
+                print(f"  FAIL: {msg}")
+            raise SystemExit(1)
+
         return run_id
