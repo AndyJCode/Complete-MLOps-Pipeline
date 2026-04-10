@@ -127,7 +127,10 @@ def load_config(config_path: str = 'configs/train_config.yaml') -> Dict:
 
 def run_experiment(config_path: str = 'configs/train_config.yaml') -> Optional[str]:
     """Run a single experiment with the given configuration file."""
-    from src.evaluation import run_experiment_from_dict  # local import breaks circular dependency
+    try:
+        from src.evaluation import run_experiment_from_dict  # when run as a module
+    except ModuleNotFoundError:
+        from evaluation import run_experiment_from_dict  # when run as a script
     config = load_config(config_path)
     return run_experiment_from_dict(config)
 

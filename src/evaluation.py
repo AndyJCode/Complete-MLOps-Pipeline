@@ -12,12 +12,10 @@ from sklearn.preprocessing import StandardScaler
 
 
 # Import from train (shared utilities)
-from src.train import (
-    build_model,
-    compute_data_version,
-    load_and_prepare_data,
-    log_config_params
-)
+try:
+    from src.train import (build_model, compute_data_version, load_and_prepare_data, log_config_params)
+except ModuleNotFoundError:
+    from train import (build_model, compute_data_version, load_and_prepare_data, log_config_params)
 
 
 #MOVE THIS TO EVALUATION.PY
