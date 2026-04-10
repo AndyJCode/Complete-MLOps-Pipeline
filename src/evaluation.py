@@ -41,8 +41,8 @@ def run_experiment_from_dict(config: Dict) -> str:
         X_train, X_test, y_train, y_test = train_test_split(
             X,
             y,
-            test_size=config['test_size'],
-            random_state=config['random_state'],
+            test_size=config.get('test_size', 0.2),
+            random_state=config.get('random_state', 12345),
             stratify=y
         )
 

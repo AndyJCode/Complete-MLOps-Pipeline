@@ -4,7 +4,7 @@ from typing import Union
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-def preprocess_data(data: Union[str, pd.DataFrame] = 'data/raw/heart_combined.csv', binary_target: bool = True):
+def preprocess_data(data: Union[str, pd.DataFrame] = 'data/heart_combined.csv', binary_target: bool = True):
     """Preprocess heart disease data for modeling.
     
     Args:
@@ -42,7 +42,7 @@ def preprocess_data(data: Union[str, pd.DataFrame] = 'data/raw/heart_combined.cs
             df[col] = df[col].fillna(df[col].median())
     for col in categorical_cols:
         if col in df.columns:
-            df[col] = df[col].fillna(df[col].mode()[0])
+            df[col] = df[col].fillna(df[col].mode().iloc[0])
     
 
     # In preprocessing

@@ -12,7 +12,11 @@
       "Bash(python -c \"import evidently.presets as p; print\\([x for x in dir\\(p\\) if 'rift' in x or 'Drift' in x]\\)\")",
       "Bash(python -c \"from evidently.presets import DataDriftPreset; help\\(DataDriftPreset.__init__\\)\")",
       "Bash(python -c \"from evidently.metrics import DriftedColumnsCount; help\\(DriftedColumnsCount.__init__\\)\")",
-      "Bash(python -m pytest tests/ -v)"
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python -c \"import sys; sys.path.insert\\(0, '.'\\); from src.train import run_experiment_from_dict; print\\('Import successful'\\)\")",
+      "Bash(python -c \"import sys; sys.path.insert\\(0, '.'\\); from compare_experiments import load_base_config; print\\('Import successful'\\)\")",
+      "Bash(python)",
+      "Bash(python -m pytest tests/ -v --tb=short)"
     ]
   }
 }
