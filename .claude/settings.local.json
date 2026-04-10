@@ -16,7 +16,8 @@
       "Bash(python -c \"import sys; sys.path.insert\\(0, '.'\\); from src.train import run_experiment_from_dict; print\\('Import successful'\\)\")",
       "Bash(python -c \"import sys; sys.path.insert\\(0, '.'\\); from compare_experiments import load_base_config; print\\('Import successful'\\)\")",
       "Bash(python)",
-      "Bash(python -m pytest tests/ -v --tb=short)"
+      "Bash(python -m pytest tests/ -v --tb=short)",
+      "Bash(python -m pytest tests/test_model_validation.py::test_random_forest_model_meets_minimum_accuracy -v --tb=short)"
     ]
   }
 }
